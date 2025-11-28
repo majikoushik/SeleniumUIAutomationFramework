@@ -48,7 +48,10 @@ public final class DriverFactory {
                 String browserProp = System.getProperty("browser", "chrome");
                 if ("chrome-headless".equalsIgnoreCase(browserProp)) {
                     options.addArguments("--headless=new");
+                    options.addArguments("--no-sandbox");
+                    options.addArguments("--disable-dev-shm-usage");
                     options.addArguments("--disable-gpu");
+                    options.addArguments("--window-size=1920,1080");
                 }
 
                 driver = new ChromeDriver(options);

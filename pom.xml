@@ -133,6 +133,9 @@
 
                     <!-- To pass tags later from command line -->
                     <systemPropertyVariables>
+                        <!-- Pass Maven profile properties down as Java system properties -->
+                        <browser>${browser}</browser>
+                        <env>${env}</env>
                         <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
                     </systemPropertyVariables>
                 </configuration>

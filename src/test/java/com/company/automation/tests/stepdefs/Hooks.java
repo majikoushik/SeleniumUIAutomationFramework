@@ -39,14 +39,21 @@ public class Hooks {
     public void afterScenario(Scenario scenario) {
         try {
             if (scenario.isFailed()) {
-                WebDriver driver = DriverManager.getDriver();
-                if (driver instanceof TakesScreenshot) {
-                    byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-                    scenario.attach(screenshot, "image/png", "Failure screenshot");
+                try {
+                    WebDriver driver = DriverManager.getDriver();
+                    if (driver instanceof TakesScreenshot) {
+                        byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+                        scenario.attach(screenshot, "image/png", "Failure screenshot");
+                    }
+                } catch (IllegalStateException e) {
+                    // Driver was never created (e.g., session failure in @Before) – just skip screenshot.
+                    System.out.println("No WebDriver available for screenshot: " + e.getMessage());
                 }
             }
         } finally {
+            // Quit if present; DriverManager.quit() already handles null safely.
             DriverManager.quit();
         }
     }
+
 }
