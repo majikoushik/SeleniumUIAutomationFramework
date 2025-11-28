@@ -9,6 +9,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Creates WebDriver instances based on browser and run.mode (local/remote).
@@ -45,8 +47,19 @@ public final class DriverFactory {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
 
+                // Disable Chrome password manager UI
+                Map<String, Object> prefs = new HashMap<>();
+                prefs.put("credentials_enable_service", false);
+                prefs.put("profile.password_manager_enabled", false);
+                options.setExperimentalOption("prefs", prefs);
+                options.addArguments("--incognito");
+
+                // Disable password leak detection (“Change your password” dialog)
+                options.addArguments("--disable-features=PasswordLeakDetection");
+
                 String browserProp = System.getProperty("browser", "chrome");
                 if ("chrome-headless".equalsIgnoreCase(browserProp)) {
+                    System.out.println("Headless chrome running");
                     options.addArguments("--headless=new");
                     options.addArguments("--no-sandbox");
                     options.addArguments("--disable-dev-shm-usage");

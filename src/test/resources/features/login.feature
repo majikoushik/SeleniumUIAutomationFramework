@@ -1,7 +1,7 @@
-@login @smoke @orangehrm
-Feature: OrangeHRM login
+@login @swaglabs @regression @smoke
+Feature: Swag Labs login
 
-  Scenario: Valid admin user can log in successfully
-    Given I am on the OrangeHRM login page
-    When I login as "Admin" with password "admin123"
-    Then I should see the OrangeHRM dashboard
+  Scenario: Valid standard user can log in successfully
+    Given I am on the Swag Labs login page
+    When I login as "standard_user" with password "secret_sauce"
+    Then I should see the products page

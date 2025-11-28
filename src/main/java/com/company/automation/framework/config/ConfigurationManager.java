@@ -16,9 +16,16 @@ import java.util.Properties;
 public final class ConfigurationManager {
 
     private static final Properties PROPS = new Properties();
-    private static final String ENV = System.getProperty("env", "qa");
+    private static final String ENV;
 
     static {
+        // Read env from system property, but fall back to "qa" if null/empty
+        String sysEnv = System.getProperty("env");
+        if (sysEnv == null || sysEnv.trim().isEmpty()) {
+            ENV = "qa";
+        } else {
+            ENV = sysEnv.trim();
+        }
         String fileName = String.format("config/config-%s.properties", ENV);
         try (InputStream is = Thread.currentThread()
                 .getContextClassLoader()
