@@ -17,7 +17,7 @@ public class LoginStepDefs {
 
     @Given("I am on the OrangeHRM login page")
     public void iAmOnOrangeHrmLoginPage() {
-        loginPage.open();
+        loginPage.open();  // this now waits for heading + username
     }
 
     @When("I login as {string} with password {string}")
