@@ -1,0 +1,40 @@
+name: UI Automation Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # allow manual run from UI
+
+jobs:
+  ui-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'   # 17 is safe; code still target=17 even if you use 25 locally
+          cache: 'maven'
+
+      - name: Run smoke tests (QA, Chrome headless)
+        run: mvn clean test -Pqa-chrome-headless -Dcucumber.filter.tags="@smoke"
+
+      # OPTIONAL: you can pass env and tags as inputs later
+      - name: Generate Allure HTML report
+        if: always()
+        run: |
+          mvn allure:report
+          ls -R target/site/allure-maven-plugin
+
+      - name: Upload Allure raw results
+        uses: actions/upload-artifact@v4
+        if: always()   # upload even if tests fail
+        with:
+          name: allure-results
+          path: target/allure-results

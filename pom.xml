@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.company.automation</groupId>
+    <artifactId>ui-automation-bdd</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>17</maven.compiler.release>
+        <!-- Dependency versions (easy to update in one place) -->
+        <selenium.version>4.18.1</selenium.version>
+        <cucumber.version>7.16.1</cucumber.version>
+        <allure.version>2.16.1</allure.version>
+        <webdrivermanager.version>5.9.2</webdrivermanager.version>
+        <log4j2.version>2.22.1</log4j2.version>
+        <junit.version>5.10.2</junit.version>
+    </properties>
+    <!-- ===== Cucumber BOM to keep all cucumber deps same version ===== -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-bom</artifactId>
+                <version>${cucumber.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- ===== Dependencies ===== -->
+    <dependencies>
+        <!-- Selenium 4 (brings WebDriver, WebElement, etc.) -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+
+        <!-- WebDriverManager (handles driver binaries automatically) -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
+
+        <!-- Cucumber core for step definitions -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+        </dependency>
+
+        <!-- JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JUnit Platform Suite (needed for @Suite, @SelectClasspathResource, etc.) -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>1.10.2</version> <!-- match JUnit 5 version line -->
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Cucumber JUnit Platform engine (runs Cucumber on JUnit 5 platform) -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Allure adapter for Cucumber 7 (for nice HTML reports) -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+            <version>2.31.0</version>
+        </dependency>
+
+        <!-- Logging with Log4j2 (and SLF4J bridge) -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+
+        <!-- Optional: Jackson for JSON test data (phase 2) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.0</version>
+        </dependency>
+    </dependencies>
+
+    <!-- ===== Build plugins ===== -->
+    <build>
+        <plugins>
+            <!-- Compiler plugin: set Java 17 explicitly -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.12.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <release>${maven.compiler.release}</release>
+                </configuration>
+            </plugin>
+
+            <!-- Surefire runs the tests (Cucumber via JUnit Platform) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <!-- We will create this runner class in Step 3 -->
+                    <includes>
+                        <include>**/RunCucumberTest.java</include>
+                    </includes>
+
+                    <!-- To pass tags later from command line -->
+                    <systemPropertyVariables>
+                        <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+
+            <!-- Allure Maven plugin (we'll use it in Step 4) -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <!-- QA environment, Chrome UI -->
+        <profile>
+            <id>qa-chrome</id>
+            <properties>
+                <env>qa</env>
+                <browser>chrome</browser>
+            </properties>
+        </profile>
+
+        <!-- QA environment, Chrome headless (for CI) -->
+        <profile>
+            <id>qa-chrome-headless</id>
+            <properties>
+                <env>qa</env>
+                <browser>chrome-headless</browser>
+            </properties>
+        </profile>
+
+        <!-- DEV environment, Chrome UI -->
+        <profile>
+            <id>dev-chrome</id>
+            <properties>
+                <env>dev</env>
+                <browser>chrome</browser>
+            </properties>
+        </profile>
+    </profiles>
+
+
+</project>
