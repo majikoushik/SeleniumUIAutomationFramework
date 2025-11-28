@@ -1,5 +1,6 @@
 package com.company.automation.tests.stepdefs;
 
+import com.company.automation.framework.driver.DriverFactory;
 import com.company.automation.framework.driver.DriverManager;
 import com.company.automation.framework.pages.CartPage;
 import com.company.automation.framework.pages.CheckoutPage;
@@ -10,6 +11,8 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import io.cucumber.datatable.DataTable;
 import org.junit.jupiter.api.Assertions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,7 @@ import java.util.List;
  * Step definitions for Swag Labs inventory and checkout regression scenarios.
  */
 public class InventoryAndCheckoutStepDefs {
-
+    private static final Logger log = LoggerFactory.getLogger(InventoryAndCheckoutStepDefs.class);
     private final LoginPage loginPage = new LoginPage();
     private final InventoryPage inventoryPage = new InventoryPage();
     private final CartPage cartPage = new CartPage();
@@ -66,10 +69,10 @@ public class InventoryAndCheckoutStepDefs {
             double price = inventoryPage.getProductPrice(productName);
             expectedItemTotal += price;
 
-            System.out.println("[StepDefs] Added '" + productName + "' with price " + price);
+            log.info("[StepDefs] Added '" + productName + "' with price " + price);
         }
 
-        System.out.println("[StepDefs] Expected item total from selected products: " + expectedItemTotal);
+        log.info("[StepDefs] Expected item total from selected products: " + expectedItemTotal);
 
         // Go to cart
         inventoryPage.goToCart();
@@ -93,7 +96,7 @@ public class InventoryAndCheckoutStepDefs {
     @Then("the item total on the checkout page should equal the sum of selected products")
     public void the_item_total_on_the_checkout_page_should_equal_the_sum_of_selected_products() {
         double actualItemTotal = checkoutPage.getItemTotal();
-        System.out.println("[StepDefs] Actual item total from checkout summary: " + actualItemTotal);
+        log.info("[StepDefs] Actual item total from checkout summary: " + actualItemTotal);
 
         // We can allow a very small delta for floating point comparisons
         Assertions.assertEquals(expectedItemTotal, actualItemTotal, 0.01,

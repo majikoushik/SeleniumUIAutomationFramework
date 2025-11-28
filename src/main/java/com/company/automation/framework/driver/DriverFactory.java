@@ -1,12 +1,15 @@
 package com.company.automation.framework.driver;
 
 import com.company.automation.framework.config.ConfigurationManager;
+import com.company.automation.framework.pages.LoginPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -17,7 +20,7 @@ import java.util.Map;
  * For now, we only implement local mode; remote (Selenium Grid) can be added later.
  */
 public final class DriverFactory {
-
+    private static final Logger log = LoggerFactory.getLogger(DriverFactory.class);
     private DriverFactory() {
         // utility class
     }
@@ -59,7 +62,7 @@ public final class DriverFactory {
 
                 String browserProp = System.getProperty("browser", "chrome");
                 if ("chrome-headless".equalsIgnoreCase(browserProp)) {
-                    System.out.println("Headless chrome running");
+                    log.info("Headless chrome running");
                     options.addArguments("--headless=new");
                     options.addArguments("--no-sandbox");
                     options.addArguments("--disable-dev-shm-usage");

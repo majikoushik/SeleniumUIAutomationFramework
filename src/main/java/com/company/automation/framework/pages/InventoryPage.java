@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ import java.util.List;
  * Page Object for Swag Labs inventory (products) page.
  */
 public class InventoryPage extends BasePage {
+    private static final Logger log = LoggerFactory.getLogger(InventoryPage.class);
 
     // "Products" title at top-left
     private final By productsTitle = By.cssSelector("span.title");
@@ -37,11 +40,11 @@ public class InventoryPage extends BasePage {
         try {
             WebElement titleElement = waitVisible(productsTitle);
             String titleText = titleElement.getText();
-            System.out.println("[InventoryPage] Products page title: " + titleText);
+            log.info("[InventoryPage] Products page title: " + titleText);
         } catch (TimeoutException e) {
-            System.out.println("[InventoryPage] Timeout waiting for products title.");
-            System.out.println("[InventoryPage] URL: " + driver.getCurrentUrl());
-            System.out.println("[InventoryPage] Title: " + driver.getTitle());
+            log.info("[InventoryPage] Timeout waiting for products title.");
+            log.info("[InventoryPage] URL: " + driver.getCurrentUrl());
+            log.info("[InventoryPage] Title: " + driver.getTitle());
             throw e;
         }
     }
@@ -50,7 +53,7 @@ public class InventoryPage extends BasePage {
      * Sort products using the visible text in the sort dropdown.
      */
     public void sortByVisibleText(String visibleText) {
-        System.out.println("[InventoryPage] Sorting by: " + visibleText);
+        log.info("[InventoryPage] Sorting by: " + visibleText);
         WebElement dropdownElement = waitVisible(sortDropdown);
         Select select = new Select(dropdownElement);
         select.selectByVisibleText(visibleText);
@@ -77,8 +80,8 @@ public class InventoryPage extends BasePage {
 
         By addButton = By.cssSelector("button[data-test='" + dataTest + "']");
 
-        System.out.println("[InventoryPage] Adding product to cart: '" + normalized + "'");
-        System.out.println("[InventoryPage] Using data-test: " + dataTest);
+        log.info("[InventoryPage] Adding product to cart: '" + normalized + "'");
+        log.info("[InventoryPage] Using data-test: " + dataTest);
 
         click(addButton);
     }
@@ -103,7 +106,7 @@ public class InventoryPage extends BasePage {
         By priceLocator = By.xpath(xpath);
         String priceText = getText(priceLocator).trim();   // e.g. "$29.99"
 
-        System.out.println("[InventoryPage] Price text for '" + normalized + "': " + priceText);
+        log.info("[InventoryPage] Price text for '" + normalized + "': " + priceText);
 
         return parsePrice(priceText);
     }
@@ -114,7 +117,7 @@ public class InventoryPage extends BasePage {
      * Click on the cart icon to go to the cart page.
      */
     public void goToCart() {
-        System.out.println("[InventoryPage] Going to cart page.");
+        log.info("[InventoryPage] Going to cart page.");
 
         By titleLocator = By.cssSelector("span.title");
 
@@ -122,10 +125,10 @@ public class InventoryPage extends BasePage {
             click(cartIcon);  // uses elementToBeClickable now
             try {
                 wait.until(ExpectedConditions.textToBe(titleLocator, "Your Cart"));
-                System.out.println("[InventoryPage] Cart page loaded (attempt " + attempt + ").");
+                log.info("[InventoryPage] Cart page loaded (attempt " + attempt + ").");
                 return;
             } catch (TimeoutException e) {
-                System.out.println("[InventoryPage] Cart navigation not complete on attempt "
+                log.info("[InventoryPage] Cart navigation not complete on attempt "
                         + attempt + " (title not 'Your Cart').");
             }
         }
@@ -138,10 +141,10 @@ public class InventoryPage extends BasePage {
      */
     public boolean isProductVisible(String productName) {
         List<WebElement> products = driver.findElements(productNames);
-        System.out.println("[InventoryPage] Number of products found: " + products.size());
+        log.info("[InventoryPage] Number of products found: " + products.size());
         for (WebElement p : products) {
             String name = p.getText().trim();
-            System.out.println("[InventoryPage] Product name: " + name);
+            log.info("[InventoryPage] Product name: " + name);
             if (name.equalsIgnoreCase(productName.trim())) {
                 return true;
             }

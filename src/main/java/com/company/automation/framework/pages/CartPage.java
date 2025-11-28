@@ -4,13 +4,16 @@ import com.company.automation.framework.core.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
  * Page Object for the Swag Labs cart page.
  */
 public class CartPage extends BasePage {
+
+    private static final Logger log = LoggerFactory.getLogger(CartPage.class);
 
     // Cart title ("Your Cart")
     private final By cartTitle = By.cssSelector("span.title");
@@ -31,7 +34,7 @@ public class CartPage extends BasePage {
         wait.until(ExpectedConditions.textToBe(cartTitle, "Your Cart"));
 
         WebElement titleElement = driver.findElement(cartTitle);
-        System.out.println("[CartPage] Title: " + titleElement.getText());
+        log.info("[CartPage] Title: " + titleElement.getText());
     }
 
     /**
@@ -43,17 +46,17 @@ public class CartPage extends BasePage {
         ensureOnCartPage();
 
         List<WebElement> items = driver.findElements(cartItem);
-        System.out.println("[CartPage] Number of cart items: " + items.size());
+        log.info("[CartPage] Number of cart items: " + items.size());
 
         for (WebElement item : items) {
             String name = item.findElement(itemName).getText().trim();
-            System.out.println("[CartPage] Cart item name: '" + name + "'");
+            log.info("[CartPage] Cart item name: '" + name + "'");
             if (name.equalsIgnoreCase(normalized)) {
-                System.out.println("[CartPage] Matched cart item: '" + normalized + "'");
+                log.info("[CartPage] Matched cart item: '" + normalized + "'");
                 return true;
             }
         }
-        System.out.println("[CartPage] Product NOT found in cart: '" + normalized + "'");
+        log.info("[CartPage] Product NOT found in cart: '" + normalized + "'");
         return false;
     }
 
@@ -74,7 +77,7 @@ public class CartPage extends BasePage {
                     priceText = priceText.substring(1);
                 }
                 double price = Double.parseDouble(priceText);
-                System.out.println("[CartPage] Price for '" + normalized + "' in cart: " + price);
+                log.info("[CartPage] Price for '" + normalized + "' in cart: " + price);
                 return price;
             }
         }
@@ -92,6 +95,6 @@ public class CartPage extends BasePage {
         // The same span.title element is used on the checkout page.
         // Its text becomes "Checkout: Your Information".
         wait.until(ExpectedConditions.textToBe(cartTitle, "Checkout: Your Information"));
-        System.out.println("[CartPage] Navigated to Checkout: Your Information.");
+        log.info("[CartPage] Navigated to Checkout: Your Information.");
     }
 }

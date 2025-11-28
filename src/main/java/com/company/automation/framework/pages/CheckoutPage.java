@@ -3,12 +3,14 @@ package com.company.automation.framework.pages;
 import com.company.automation.framework.core.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Page Object for Swag Labs checkout steps (Step One, Step Two, and Complete).
  */
 public class CheckoutPage extends BasePage {
-
+    private static final Logger log = LoggerFactory.getLogger(CheckoutPage.class);
     // Step One: Your Information
     private final By firstNameInput = By.id("first-name");
     private final By lastNameInput = By.id("last-name");
@@ -39,7 +41,7 @@ public class CheckoutPage extends BasePage {
      */
     public double getItemTotal() {
         String label = getText(itemTotalLabel).trim();
-        System.out.println("[CheckoutPage] Item total label: " + label);
+        log.info("[CheckoutPage] Item total label: " + label);
 
         // Extract the number after the colon
         String[] parts = label.split(":");
@@ -66,7 +68,7 @@ public class CheckoutPage extends BasePage {
     public boolean isOrderSuccessMessageDisplayed() {
         try {
             String text = getText(successHeader).trim();
-            System.out.println("[CheckoutPage] Success header: " + text);
+            log.info("[CheckoutPage] Success header: " + text);
             return text.equalsIgnoreCase("Thank you for your order!");
         } catch (TimeoutException e) {
             return false;

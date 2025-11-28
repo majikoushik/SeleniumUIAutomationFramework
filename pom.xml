@@ -84,17 +84,18 @@
             <artifactId>allure-cucumber7-jvm</artifactId>
             <version>2.31.0</version>
         </dependency>
-
-        <!-- Logging with Log4j2 (and SLF4J bridge) -->
+        <!-- SLF4J API -->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j2.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.13</version>
         </dependency>
+
+        <!-- Logback implementation (connects SLF4J to real logging) -->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j2-impl</artifactId>
-            <version>${log4j2.version}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.6</version>
         </dependency>
 
         <!-- Optional: Jackson for JSON test data (phase 2) -->

@@ -3,10 +3,13 @@ package com.company.automation.tests.stepdefs;
 import com.company.automation.framework.driver.BrowserType;
 import com.company.automation.framework.driver.DriverFactory;
 import com.company.automation.framework.driver.DriverManager;
+import com.company.automation.framework.pages.CartPage;
 import io.cucumber.java.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Locale;
 
@@ -14,6 +17,8 @@ import java.util.Locale;
  * Global Cucumber hooks for WebDriver lifecycle and failure screenshots.
  */
 public class Hooks {
+
+    private static final Logger log = LoggerFactory.getLogger(Hooks.class);
 
     @Before
     public void beforeScenario(Scenario scenario) {
@@ -32,7 +37,7 @@ public class Hooks {
         WebDriver driver = DriverFactory.createInstance(browserType);
         DriverManager.setDriver(driver);
 
-        System.out.println("=== Starting scenario: " + scenario.getName() + " on browser: " + browserType + " ===");
+        log.info("=== Starting scenario: " + scenario.getName() + " on browser: " + browserType + " ===");
     }
 
     @After
@@ -47,7 +52,7 @@ public class Hooks {
                     }
                 } catch (IllegalStateException e) {
                     // Driver was never created (e.g., session failure in @Before) – just skip screenshot.
-                    System.out.println("No WebDriver available for screenshot: " + e.getMessage());
+                    log.info("No WebDriver available for screenshot: " + e.getMessage());
                 }
             }
         } finally {

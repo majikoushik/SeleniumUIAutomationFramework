@@ -1,0 +1,50 @@
+2025-11-28 21:26:36 INFO  i.g.bonigarcia.wdm.WebDriverManager - Using chromedriver 142.0.7444.175 (resolved driver for Chrome 142)
+2025-11-28 21:26:36 INFO  i.g.bonigarcia.wdm.WebDriverManager - Exporting webdriver.chrome.driver as C:\Users\koush\.cache\selenium\chromedriver\win64\142.0.7444.175\chromedriver.exe
+2025-11-28 21:26:37 INFO  c.c.automation.tests.stepdefs.Hooks - === Starting scenario: Standard user can complete checkout and item total is correct on browser: CHROME ===
+2025-11-28 21:26:38 INFO  c.c.a.framework.pages.LoginPage - [LoginPage] Navigated to: https://www.saucedemo.com/
+2025-11-28 21:26:38 INFO  c.c.a.framework.pages.LoginPage - [LoginPage] Title: Swag Labs
+2025-11-28 21:26:39 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Products page title: Products
+2025-11-28 21:26:39 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Sorting by: Price (low to high)
+2025-11-28 21:26:39 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Adding product to cart: 'Sauce Labs Backpack'
+2025-11-28 21:26:39 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Using data-test: add-to-cart-sauce-labs-backpack
+2025-11-28 21:26:39 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Price text for 'Sauce Labs Backpack': $29.99
+2025-11-28 21:26:39 INFO  c.c.a.t.s.InventoryAndCheckoutStepDefs - [StepDefs] Added 'Sauce Labs Backpack' with price 29.99
+2025-11-28 21:26:39 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Adding product to cart: 'Sauce Labs Bike Light'
+2025-11-28 21:26:39 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Using data-test: add-to-cart-sauce-labs-bike-light
+2025-11-28 21:26:39 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Price text for 'Sauce Labs Bike Light': $9.99
+2025-11-28 21:26:39 INFO  c.c.a.t.s.InventoryAndCheckoutStepDefs - [StepDefs] Added 'Sauce Labs Bike Light' with price 9.99
+2025-11-28 21:26:39 INFO  c.c.a.t.s.InventoryAndCheckoutStepDefs - [StepDefs] Expected item total from selected products: 39.98
+2025-11-28 21:26:39 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Going to cart page.
+2025-11-28 21:26:39 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Cart page loaded (attempt 1).
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CartPage - [CartPage] Title: Your Cart
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CartPage - [CartPage] Number of cart items: 2
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CartPage - [CartPage] Cart item name: 'Sauce Labs Backpack'
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CartPage - [CartPage] Matched cart item: 'Sauce Labs Backpack'
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CartPage - [CartPage] Title: Your Cart
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CartPage - [CartPage] Number of cart items: 2
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CartPage - [CartPage] Cart item name: 'Sauce Labs Backpack'
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CartPage - [CartPage] Cart item name: 'Sauce Labs Bike Light'
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CartPage - [CartPage] Matched cart item: 'Sauce Labs Bike Light'
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CartPage - [CartPage] Title: Your Cart
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CartPage - [CartPage] Navigated to Checkout: Your Information.
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CheckoutPage - [CheckoutPage] Item total label: Item total: $39.98
+2025-11-28 21:26:40 INFO  c.c.a.t.s.InventoryAndCheckoutStepDefs - [StepDefs] Actual item total from checkout summary: 39.98
+2025-11-28 21:26:40 INFO  c.c.a.framework.pages.CheckoutPage - [CheckoutPage] Success header: Thank you for your order!
+2025-11-28 21:26:41 INFO  i.g.bonigarcia.wdm.WebDriverManager - Using chromedriver 142.0.7444.175 (resolved driver for Chrome 142)
+2025-11-28 21:26:41 INFO  i.g.bonigarcia.wdm.WebDriverManager - Exporting webdriver.chrome.driver as C:\Users\koush\.cache\selenium\chromedriver\win64\142.0.7444.175\chromedriver.exe
+2025-11-28 21:26:42 INFO  c.c.automation.tests.stepdefs.Hooks - === Starting scenario: Valid standard user can log in successfully on browser: CHROME ===
+2025-11-28 21:26:43 INFO  c.c.a.framework.pages.LoginPage - [LoginPage] Navigated to: https://www.saucedemo.com/
+2025-11-28 21:26:43 INFO  c.c.a.framework.pages.LoginPage - [LoginPage] Title: Swag Labs
+2025-11-28 21:26:44 INFO  i.g.bonigarcia.wdm.WebDriverManager - Using chromedriver 142.0.7444.175 (resolved driver for Chrome 142)
+2025-11-28 21:26:44 INFO  i.g.bonigarcia.wdm.WebDriverManager - Exporting webdriver.chrome.driver as C:\Users\koush\.cache\selenium\chromedriver\win64\142.0.7444.175\chromedriver.exe
+2025-11-28 21:26:45 INFO  c.c.automation.tests.stepdefs.Hooks - === Starting scenario: Standard user can see a specific product in the inventory on browser: CHROME ===
+2025-11-28 21:26:46 INFO  c.c.a.framework.pages.LoginPage - [LoginPage] Navigated to: https://www.saucedemo.com/
+2025-11-28 21:26:46 INFO  c.c.a.framework.pages.LoginPage - [LoginPage] Title: Swag Labs
+2025-11-28 21:26:47 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Products page title: Products
+2025-11-28 21:26:47 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Sorting by: Price (low to high)
+2025-11-28 21:26:47 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Number of products found: 6
+2025-11-28 21:26:47 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Product name: Sauce Labs Onesie
+2025-11-28 21:26:47 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Product name: Sauce Labs Bike Light
+2025-11-28 21:26:47 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Product name: Sauce Labs Bolt T-Shirt
+2025-11-28 21:26:47 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Product name: Test.allTheThings() T-Shirt (Red)
+2025-11-28 21:26:47 INFO  c.c.a.framework.pages.InventoryPage - [InventoryPage] Product name: Sauce Labs Backpack
